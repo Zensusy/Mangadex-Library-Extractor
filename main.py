@@ -7,12 +7,12 @@ def extract_information(json_data, selected_fields):
         print("No manga information found in the JSON data.")
         return
     
-    for idx, manga_info in enumerate(manga_list, start=1):
+    with open("result.txt", "w", encoding="utf-8") as result_file:
+     for idx, manga_info in enumerate(manga_list, start=1):
         attributes = manga_info.get("attributes", {})
         title = attributes.get("title", {}).get("en", "")
         alt_titles = [alt_title.get("ja-ro", "") for alt_title in attributes.get("altTitles", [])]
         description = attributes.get("description", {}).get("en", "")
-        is_locked = attributes.get("isLocked", False)
         links = attributes.get("links", {}).get("raw", "")
         original_language = attributes.get("originalLanguage", "")
         status = attributes.get("status", "")
@@ -30,8 +30,6 @@ def extract_information(json_data, selected_fields):
                 print(f"Title: {title}")
             elif field == "Description":
                 print(f"Description: {description}")
-            elif field == "Is Locked":
-                print(f"Is Locked: {is_locked}")
             elif field == "Original Language":
                 print(f"Original Language: {original_language}")
             elif field == "Links":
@@ -49,7 +47,6 @@ def extract_information(json_data, selected_fields):
             elif field == "All":
                 print(f"Title: {title}")
                 print(f"Description: {description}")
-                print(f"Is Locked: {is_locked}")
                 print(f"Original Language: {original_language}")
                 print(f"Links: {''.join(links)}")
                 print(f"Status: {status}")
@@ -70,26 +67,27 @@ def main():
         print("0. All")
         print("1. Title")
         print("2. Description")
-        print("3. Is Locked")
-        print("4. Original Language")
-        print("5. Links")
-        print("6. Status")
-        print("7. Year")
-        print("8. Content Rating")
-        print("9. Tags")
-        print("10. Author")
+        print("3. Original Language")
+        print("4. Links")
+        print("5. Status")
+        print("6. Year")
+        print("7. Content Rating")
+        print("8. Tags")
+        print("9. Author")
+
 
         # Get user input for selected fields
         selected_fields_input = input("Input (comma-separated numbers): ")
         selected_field_numbers = [int(number.strip()) for number in selected_fields_input.split(",")]
 
         # Convert selected numbers to field names
-        field_names = ["All", "Title", "Description", "Is Locked", "Original Language", "Links",
+        field_names = ["All", "Title", "Description", "Original Language", "Links",
                        "Status", "Year", "Content Rating", "Tags", "Author"]
         selected_fields = [field_names[num] for num in selected_field_numbers]
 
         # Extract information
         extract_information(json_data, selected_fields)
+        print("Extraction completed. Results saved to 'result.txt'.")
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")

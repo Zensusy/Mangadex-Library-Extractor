@@ -1,5 +1,4 @@
 import json
-import sys
 
 def extract_information(json_data, selected_fields, result_file):
     manga_list = json_data.get("data", [])  

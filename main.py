@@ -107,7 +107,7 @@ def main():
 
         # Extract information
         extract_information(json_data, selected_fields, result_file)
-        print("Extraction completed. Results saved to result.txt!")
+        print("\nExtraction completed. Results saved to result.txt!")
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
